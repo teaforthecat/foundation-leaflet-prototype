@@ -16,7 +16,7 @@ gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'unicorn'
 
 gem 'devise'
-
+gem 'capybara'
 
 group :development do
   gem "guard-rspec"
