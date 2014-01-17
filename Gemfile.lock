@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/Retistic/foundation-rails.git
+  revision: acc56c18e2fc22d8f4e7becead3f54c6f871b3ad
+  specs:
+    foundation-rails (5.0.3.0)
+      railties (>= 3.1.0)
+      sass (>= 3.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -245,6 +253,7 @@ DEPENDENCIES
   debugger
   devise
   factory_girl_rails
+  foundation-rails!
   guard-rspec
   haml
   jbuilder (~> 1.2)

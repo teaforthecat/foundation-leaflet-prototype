@@ -9,6 +9,9 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 
+# gem 'foundation-rails', TODO: use '5.0.4' when it comes out
+gem 'foundation-rails', github: 'Retistic/foundation-rails'
+
 gem 'jbuilder', '~> 1.2'
 gem 'haml'
 
