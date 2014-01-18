@@ -14,6 +14,7 @@ When(/^I create a new notification$/) do
 end
 
 When(/^I select "(.*?)" from "(.*?)"$/) do |option, label|
+  debugger
   select option, from: label
 end
 

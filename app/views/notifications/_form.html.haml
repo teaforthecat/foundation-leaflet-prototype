@@ -2,7 +2,8 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :dcm_topic_id, label: "DCM Topics", collection: @dcm_topics
+    = f.input :dcm_topic_id, label: "DCM Topics",
+      as: :select, collection: @dcm_topics
     = f.input :dcm_account_code
 
   .form-actions

@@ -6,11 +6,11 @@ I want to create a notification that uses many channels
 This is a high level feature description of creating a Notification
 
 Abilities when creating a Notification:
-- Select a topic from DCM
-- Select a e911 list
-- Select by geography
-- Select by subscriber meta data filters
-- Select by standard DCM filters
+ Select a topic from DCM
+ Select a e911 list
+ Select by geography
+ Select by subscriber meta data filters
+ Select by standard DCM filters
 
 Customize notification text for Email, SMS, Phone, Facebook, Twitter and RSS
 

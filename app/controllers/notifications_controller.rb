@@ -1,5 +1,6 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
+  before_action :set_dcm_topics, only: [:new, :show, :edit]
 
   def index
     @notifications = Notification.all
@@ -53,6 +54,9 @@ class NotificationsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_notification
       @notification = Notification.find(params[:id])
+    end
+
+    def set_dcm_topics
       @dcm_topics = []
     end
 
