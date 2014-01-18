@@ -13,12 +13,13 @@ gem 'turbolinks'
 gem 'foundation-rails', github: 'Retistic/foundation-rails'
 
 gem 'jbuilder', '~> 1.2'
-gem 'haml'
+gem 'haml-rails'
 
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'unicorn'
 
 gem 'devise'
+gem 'simple_form'
 gem 'capybara'
 
 group :development do

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Dcm topic:
+  = @notification.dcm_topic_id
+%p
+  %b Dcm account code:
+  = @notification.dcm_account_code
+
+= link_to 'Edit', edit_notification_path(@notification)
+\|
+= link_to 'Back', notifications_path

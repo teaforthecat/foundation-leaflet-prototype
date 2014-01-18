@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117045306) do
+ActiveRecord::Schema.define(version: 20140118163150) do
+
+  create_table "notifications", force: true do |t|
+    t.integer  "dcm_topic_id"
+    t.string   "dcm_account_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["dcm_account_code"], name: "index_notifications_on_dcm_account_code", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
