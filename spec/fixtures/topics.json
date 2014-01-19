@@ -1,0 +1,12 @@
+[
+    { "id":  "56789",
+      "uri": "/api/accounts/ACME/topics/56789",
+      "name": "Ice Cream",
+      "recipients_uri": "/api/accounts/ACME/topics/56789/recipients"
+    },
+    { "id":  "45678",
+      "uri": "/api/accounts/ACME/topics/45678",
+      "name": "Arsenal vs Liverpool",
+      "recipients_uri": "/api/accounts/ACME/topics/45678/recipients"
+    }
+]

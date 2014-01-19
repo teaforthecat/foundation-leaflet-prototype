@@ -14,3 +14,9 @@ Scenario: initial registration
 Given I am new to the site
 When I register with a valid email address and password
 Then I should be logged in
+
+@wip @confirm
+Scenario: Login without a DCM Account
+Given I have registered but do not have a dcm account
+And I click "Request a DCM Account"
+Then I should see "Your Request has been sent"

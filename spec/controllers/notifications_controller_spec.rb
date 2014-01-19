@@ -6,7 +6,8 @@ describe NotificationsController do
   describe "new notification" do
     it "renders dcm_topics" do
       get :new, {}, valid_session
-      expect(assigns(:dcm_topics)).to eq([])
+      @dcm_topics = assigns(:dcm_topics)
+      @dcm_topics.first.should eq(["Ice Cream", "56789"])
     end
   end
 end

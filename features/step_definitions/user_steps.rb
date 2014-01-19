@@ -13,5 +13,18 @@ When(/^I register with a valid email address and password$/) do
 end
 
 Then(/^I should be logged in$/) do
-  find_link('logout').visible?
+  find_link('Logout').visible?
+end
+
+
+Given(/^I have registered but do not have a dcm account$/) do
+  step "I register with a valid email address and password"
+end
+
+And(/^I click "(.*?)"$/) do |label|
+  click_on(label)
+end
+
+Then(/^I should see "(.*?)"$/) do |text|
+  page.should have_content(text)
 end

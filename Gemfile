@@ -17,6 +17,7 @@ gem 'haml-rails'
 
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'unicorn-rails'
+gem 'httparty'
 
 gem 'devise'
 gem 'simple_form'
@@ -34,9 +35,12 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
+
 end
 
 group :development, :test do
+  gem 'sinatra'
+  gem 'webmock'
   gem 'debugger'
   gem "zeus"
   gem 'rspec-rails', '~> 3.0.0.beta'

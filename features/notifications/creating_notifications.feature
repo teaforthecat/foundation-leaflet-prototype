@@ -27,10 +27,5 @@ Given I have an account with a dcm account code: "HAL"
 And I have a dcm account with a topic "Ice Cream"
 When I create a new notification
 And I select "Ice Cream" from "DCM Topics"
-Then I should be able to schedule the notification
+# Then I should be able to schedule the notification
 And I should be able to send the notification
-
-Scenario: Selecting a topic without DCM enabled
-Given I have an account without a dcm account
-When I create a new notification
-Then I should not see "DCM Topics"

@@ -1,11 +1,11 @@
 Given(/^I have an account with a dcm account code: "(.*?)"$/) do |code|
-  account = build_stubbed( :dcm_account, code: code )
-  DCM::Account.stub(:find).and_return( account )
+  # account = create_stubbed( :dcm_account, code: code )
+  # DCM::Account.stub(:find).and_return( account )
 end
 #TODO: maybe work these out for real, accessing dcm api an recording it with vcr
 Given(/^I have a dcm account with a topic "(.*?)"$/) do |name|
-  topic = build_stubbed( :dcm_topic, name: name )
-  DCM::Topic.stub(:find).and_return( topic )
+  # topic = create_stubbed( :dcm_topic, name: name )
+  # DCM::Topic.stub(:find).and_return( topic )
 end
 
 When(/^I create a new notification$/) do
@@ -14,7 +14,6 @@ When(/^I create a new notification$/) do
 end
 
 When(/^I select "(.*?)" from "(.*?)"$/) do |option, label|
-  debugger
   select option, from: label
 end
 

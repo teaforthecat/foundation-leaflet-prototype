@@ -57,7 +57,12 @@ class NotificationsController < ApplicationController
     end
 
     def set_dcm_topics
-      @dcm_topics = []
+      resp = DCMService.get "http://test.dcm.tops.gdi/api/accounts/ACME/topics"
+      @dcm_topics = resp.parsed_response.collect{|topic| prepare_topic(topic) }
+    end
+
+    def prepare_topic topic
+      [topic.fetch("name"), topic.fetch("id")]
     end
 
     def current_account_code
