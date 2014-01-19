@@ -11,10 +11,19 @@
     = csrf_meta_tag
 
   %body
+
     %header
+      = render 'layouts/global_nav'
       = render 'layouts/navigation'
-    %main{:role => "main"}
-      = render 'layouts/messages'
-      = yield
-    = render 'layouts/user_widget'
+
+    %main.row{:role => "main"}
+      .row
+        .columns.large-12
+          = yield
+        .row
+    %footer
+      .row
+        .columns
+
+
     = javascript_include_tag "application", "data-turbolinks-track" => true
