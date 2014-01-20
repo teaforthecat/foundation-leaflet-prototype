@@ -6,9 +6,9 @@
   .row
     .small-6.columns
       .row
-        = f.input :email, input_html: {autofocus: true}
+        = f.input :email, input_html: {autofocus: true}, placeholder: "test@te.st"
       .row
-        = f.input :password
+        = f.input :password, placeholder: "testing1"
 
       - if devise_mapping.rememberable?
         .row
