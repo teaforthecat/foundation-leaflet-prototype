@@ -1,0 +1,25 @@
+%h1 e911s Subscriber Lists
+
+%table
+  %tr
+    %th Name
+    %th Subscriber Count
+    %th Uploaded BY
+    %th Date Created
+    %th
+    %th
+    %th
+
+  - @e911s.each do |e911|
+    %tr
+      %td= e911.name
+      %td= e911.subscriber_list_row_count
+      %td= e911.versions.first.originator
+      %td= e911.created_at
+      %td= link_to 'Show', e911
+      %td= link_to 'Edit', edit_notification_path(e911)
+      %td= link_to 'Destroy', e911, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Upload New e911 List', new_e911_path, class: 'button'

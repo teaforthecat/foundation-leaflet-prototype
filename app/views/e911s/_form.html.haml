@@ -1,0 +1,13 @@
+.row
+  .small-12.columns
+    %h3 Upload Reverse 911 Subscriber List
+
+= simple_form_for(@e911, html: {multipart: true}) do |f|
+  .row
+    .small-6.columns
+      .row
+        = f.input :name
+      .row
+        = f.input :subscriber_list, as: :file
+      .row
+        = f.submit "Upload", class: "button"

@@ -16,7 +16,7 @@ Customize notification text for Email, SMS, Phone, Facebook, Twitter and RSS
 
 Schedule the sending
 
-Preview the message in for each channel
+Preview the message for each channel
 
 Send the notification
 
@@ -29,3 +29,11 @@ When I create a new notification
 And I select "Ice Cream" from "DCM Topics"
 # Then I should be able to schedule the notification
 And I should be able to send the notification
+
+@file-upload
+Scenario: Selecting a e911 list
+Given I am logged in as an account admin
+When I upload a file named "chicago.csv" that contains:
+| action | record_id | salutation | first_name | middle_name | last_name | suffix | address         | city    | state | zip | country |
+| new    |           |            | charles    | in          | charge    |        | 777 chicago ave | chicago |       |     |         |
+Then I should see "chicago" in the list of e911 lists
