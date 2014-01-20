@@ -24,6 +24,7 @@ View metrics of recipients
 
 Scenario: Selecting a topic list from DCM
 Given I have an account with a dcm account code: "HAL"
+And I am logged in as an admin
 And I have a dcm account with a topic "Ice Cream"
 When I create a new notification
 And I select "Ice Cream" from "DCM Topics"

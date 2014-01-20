@@ -4,7 +4,7 @@ class E911sController < ApplicationController
   def index
     page, per_page = (params[:page].try(:to_i) || 1),
                      (params[:per_page].try(:to_i) || 20)
-    @e911s = E911.where(account: current_user.account).paginate( page: page, per_page: per_page)
+    @e911s = E911.where(account_id: current_user.account_id).paginate( page: page, per_page: per_page)
   end
 
   def new

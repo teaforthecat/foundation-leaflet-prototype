@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140119233008) do
+ActiveRecord::Schema.define(version: 20140120122422) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -34,11 +34,20 @@ ActiveRecord::Schema.define(version: 20140119233008) do
     t.integer  "subscriber_list_row_count"
   end
 
+  create_table "e911s_notifications", force: true do |t|
+    t.integer "e911_id"
+    t.integer "notification_id"
+  end
+
+  add_index "e911s_notifications", ["e911_id"], name: "index_e911s_notifications_on_e911_id", using: :btree
+  add_index "e911s_notifications", ["notification_id"], name: "index_e911s_notifications_on_notification_id", using: :btree
+
   create_table "notifications", force: true do |t|
     t.integer  "dcm_topic_id"
     t.string   "dcm_account_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "message"
   end
 
   add_index "notifications", ["dcm_account_code"], name: "index_notifications_on_dcm_account_code", unique: true, using: :btree
