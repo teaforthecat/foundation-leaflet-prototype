@@ -7,4 +7,10 @@ FactoryGirl.define do
     dcm_account_code "MyString"
     features "MyString"
   end
+
+  factory :acme, class: Account do
+    name "acme"
+    dcm_account_code "ACME"
+    active true
+  end
 end

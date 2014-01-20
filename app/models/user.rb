@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  ROLES = %w[account_admin]
+  ROLES = %w[account_admin admin]
 
   belongs_to :account
   # Include default devise modules. Others available are:

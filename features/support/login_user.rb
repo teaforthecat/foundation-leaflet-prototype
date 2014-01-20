@@ -4,10 +4,7 @@ module LoginUser
     visit new_user_session_path
     fill_in 'Email', with: login_user.email
     fill_in 'Password', with: login_user.password
-    within "form.new_user" do
-      find('[name=commit]').click #click_button "Sign up"
-    end
-
+    submit "form.new_user"
   end
 end
 

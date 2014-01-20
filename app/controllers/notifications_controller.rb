@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
   before_action :set_dcm_topics, only: [:new, :show, :edit]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   def index
     @notifications = Notification.all
@@ -58,7 +58,8 @@ class NotificationsController < ApplicationController
     end
 
     def set_dcm_topics
-      resp = DCMService.get "http://test.dcm.tops.gdi/api/accounts/ACME/topics"
+      account_code = current_user.account.dcm_account_code
+      resp = DCMService.get "http://test.dcm.tops.gdi/api/accounts/#{account_code}/topics"
       @dcm_topics = resp.parsed_response.collect{|topic| prepare_topic(topic) }
     end
 

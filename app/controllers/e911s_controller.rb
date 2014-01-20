@@ -13,6 +13,7 @@ class E911sController < ApplicationController
 
   def create
     @e911 = E911.new(e911_params)
+    @e911.account = current_user.account
     respond_to do |format|
       if @e911.save
         format.html { redirect_to e911s_path, notice: 'E911 was successfully created.' }

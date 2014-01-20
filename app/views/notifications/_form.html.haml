@@ -5,6 +5,8 @@
     = f.input :dcm_topic_id, label: "DCM Topics",
       as: :select, collection: @dcm_topics
     = f.input :dcm_account_code
+    = f.input :e911s, label: "e911 Subscriber List",
+      as: :select, collection: @current_user.account.e911s, multiple: true
 
   .form-actions
     = f.button :submit, "Send"

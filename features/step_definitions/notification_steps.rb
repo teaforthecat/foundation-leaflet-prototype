@@ -25,6 +25,19 @@ Then(/^I should be able to send the notification$/) do
   find_button('Send').should be_visible
 end
 
+Given(/^one e911 list named "(.*?)" has been uploaded$/) do |name|
+  steps %{
+    When I upload a file named "#{name}" that contains:
+    | action | record_id | salutation | first_name | middle_name | last_name | suffix | address         | city    | state | zip | country |
+    | new    |           |            | charles    | in          | charge    |        | 777 chicago ave | chicago |       |     |         |
+    Then I should see "#{name}" in the list of e911 lists
+}
+end
+
+Given(/^I am logged in as an admin$/) do
+  login_user :admin
+end
+
 Given(/^I have an account without a dcm account$/) do
   pending # express the regexp above with the code you wish you had
 end

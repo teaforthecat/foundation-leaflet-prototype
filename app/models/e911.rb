@@ -1,8 +1,12 @@
 require 'csv'
 class E911 < ActiveRecord::Base
 
+  belongs_to :account
+
   has_attached_file :subscriber_list
   validates :subscriber_list, :attachment_presence => true
+  validates_associated :account
+
   has_paper_trail
 
   after_save :count_subscribers
