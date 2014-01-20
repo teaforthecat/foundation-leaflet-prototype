@@ -14,7 +14,17 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require foundation
+//= require ckeditor-jquery
 //= require_tree .
 $(function() {
   $(document).foundation();
+});
+
+$('.ckeditor').ckeditor({
+  // optional config
+  toolbarGroups: [
+        { name: 'links' },
+        { name: 'basicstyles' },
+        { name: 'colors' }
+    ]
 });

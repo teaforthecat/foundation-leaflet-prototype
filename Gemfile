@@ -21,6 +21,8 @@ gem 'httparty'
 gem 'paperclip'
 gem 'paper_trail', '~> 3.0'
 gem 'will_paginate', '~> 3.0'
+# gem 'rich' #not compatible with simple form yet
+gem 'ckeditor_rails'
 
 gem 'devise'
 gem 'simple_form'
