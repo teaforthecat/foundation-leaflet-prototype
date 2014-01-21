@@ -38,6 +38,26 @@ Given(/^I am logged in as an admin$/) do
   login_user :admin
 end
 
+
+When(/^I click on "(.*?)"$/) do |label|
+  click_on label
+end
+
+When(/^I fill in "(.*?)" with "(.*?)"$/) do |label, value|
+  fill_in label, with: value
+end
+
+Then(/^I should see "(.*?)" on the map$/) do |label|
+  within ".map" do
+    find(:span, text: label)
+  end
+end
+
+Then(/^the lat, long, and radius should be adjustable$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+
 Given(/^I have an account without a dcm account$/) do
   pending # express the regexp above with the code you wish you had
 end

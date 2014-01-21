@@ -23,6 +23,10 @@ gem 'paper_trail', '~> 3.0'
 gem 'will_paginate', '~> 3.0'
 # gem 'rich' #not compatible with simple form yet
 gem 'ckeditor_rails'
+# gem 'geokit-rails'
+gem 'gmaps4rails'
+gem 'underscore-rails'
+gem 'leaflet-rails'
 
 gem 'devise'
 gem 'simple_form'
@@ -40,7 +44,7 @@ end
 group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
-
+  gem 'poltergeist'
 end
 
 group :development, :test do

@@ -16,6 +16,7 @@
 //= require foundation
 //= require ckeditor-jquery
 //= require_tree .
+
 $(function() {
   $(document).foundation();
 });
@@ -27,4 +28,21 @@ $('.ckeditor').ckeditor({
         { name: 'basicstyles' },
         { name: 'colors' }
     ]
+});
+
+
+
+
+$('#myModal').on('[data-reveal]', function(){
+  setTimeout(function() {
+    map.invalidateSize();
+  }, 200);
+ });
+
+
+$(window).on('resize', function(){
+  setTimeout(function() {
+    map.invalidateSize();
+  }, 200);
+
 });
