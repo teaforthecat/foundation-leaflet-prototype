@@ -29,20 +29,3 @@ $('.ckeditor').ckeditor({
         { name: 'colors' }
     ]
 });
-
-
-
-
-$('#myModal').on('[data-reveal]', function(){
-  setTimeout(function() {
-    map.invalidateSize();
-  }, 200);
- });
-
-
-$(window).on('resize', function(){
-  setTimeout(function() {
-    map.invalidateSize();
-  }, 200);
-
-});
