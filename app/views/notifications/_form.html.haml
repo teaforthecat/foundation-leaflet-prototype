@@ -10,28 +10,19 @@
           as: :select, collection: @current_user.account.e911s,
           input_html: {multiple: true}
       .row
-        %a.map.button{'data-reveal-id' => 'modal-map'} map
-        #modal-map.reveal-modal{'data-reveal' => true}
-          = map( {center: { latlng: [51.52238797921441, -0.08366235665359283],
-            zoom: 10} })
-          %a.close-reveal-modal &#215;
+        %a.map.button{'data-request' => 'iframe-map'} map
 
-        -# #map.hide{ style: "width: 800px; height: 400px;"}
-        -#   -# javascript only
-        -#   = link_to "Map", "#"
-        -#   = text_field_tag :city
-        -#   -# = f.input :lat, as: :hidden
-        -#   -# = f.input :log, as: :hidden
-        -#   -# = f.input :radius, as: :hidden
     .medium-6.columns
-      = f.input_field :message, as: :text, class: 'ckeditor'
+      .ens-message-editor
+        = f.input_field :message, as: :text, class: 'ckeditor'
+      .ens-map-editor
+        %iframe{src: map_editor_path,
+          width: 425,
+          height: 350,
+          frameborder: 0,
+          scrolling: 'no',
+          marginheight: 0,
+          marginwidth:  0}
 
   .form-actions
     = f.button :submit, "Send"
-
--# %script{ src: "//maps.google.com/maps/api/js?v=3.13&sensor=false&libraries=geometry", type: "text/javascript"}
--# %script{ src: '//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js', type: "text/javascript"}
-#modal-map.reveal-modal{data: 'reveal'}
-  -# = map( {center: { latlng: [51.52238797921441, -0.08366235665359283], zoom: 18} })
-  %p.lead hello
-  %a.close-reveal-modal &#215;

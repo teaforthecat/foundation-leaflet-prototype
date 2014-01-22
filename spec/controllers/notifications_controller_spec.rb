@@ -9,4 +9,13 @@ describe NotificationsController do
       @dcm_topics.first.should eq(["Ice Cream", "56789"])
     end
   end
+
+  describe "map editor" do
+    it "renders an iframe body" do
+      get :map_editor
+debugger
+      print page.body
+      page.should have_selector "#map"
+    end
+  end
 end

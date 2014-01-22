@@ -1,7 +1,11 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
   before_action :set_dcm_topics, only: [:new, :show, :edit]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :map_editor
+
+  def map_editor
+    render :map_editor, layout: false
+  end
 
   def index
     @notifications = Notification.all

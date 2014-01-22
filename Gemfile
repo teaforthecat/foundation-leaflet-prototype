@@ -26,7 +26,7 @@ gem 'ckeditor_rails'
 # gem 'geokit-rails'
 gem 'gmaps4rails'
 gem 'underscore-rails'
-gem 'leaflet-rails'
+gem 'leaflet-js'
 
 gem 'devise'
 gem 'simple_form'

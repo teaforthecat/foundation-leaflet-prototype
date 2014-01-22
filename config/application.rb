@@ -11,5 +11,8 @@ module Ens
     config.i18n.default_locale = :en
     I18n.config.enforce_available_locales = true
 
+    # able to serve images in dev at least:
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
   end
 end

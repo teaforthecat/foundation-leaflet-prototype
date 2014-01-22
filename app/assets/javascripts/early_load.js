@@ -1,1 +1,1 @@
-//= require leaflet
+//= require leaflet-js

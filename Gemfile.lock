@@ -136,7 +136,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     kgio (2.8.1)
-    leaflet-rails (0.7.1)
+    leaflet-js (0.7.0.4)
     listen (2.4.0)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -314,7 +314,7 @@ DEPENDENCIES
   httparty
   jbuilder (~> 1.2)
   jquery-rails
-  leaflet-rails
+  leaflet-js
   mysql2
   paper_trail (~> 3.0)
   paperclip
