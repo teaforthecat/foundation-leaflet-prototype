@@ -7,14 +7,18 @@ L.Icon.Default.imagePath = '/assets';
 var editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
-var MyCustomMarker = L.Icon.extend({
-    options: {
-        shadowUrl: null,
-        iconAnchor: new L.Point(12, 12),
-        iconSize: new L.Point(24, 24),
-        iconUrl: 'link/to/image.png'
-    }
-});
+
+// default values. for example only.
+// var MyCustomMarker = L.Icon.extend({
+//     options: {
+//         iconUrl: '/assets/marker-icon'+ (L.Browser.retna ? '-2x': '') +'.png', //TODO: handle retna?
+//         shadowUrl: '/assets/marker-shadow.png',
+//         shadowSize: [41, 41],
+//         iconAnchor: [12, 41],
+//         iconSize: [25, 41],
+//         popupAnchor: [1, -34]
+//     }
+// });
 
 var options = {
     position: 'topright',
@@ -35,19 +39,22 @@ var options = {
                 color: '#bada55'
             }
         },
+
+        // note that geoJSON spec does not support circles
+        // however- pointToLayer option and turning point features into circles, using the radius from feature.properties.
         circle: false, // Turns off this drawing tool
         rectangle: {
             shapeOptions: {
                 clickable: false
             }
         },
-        marker: {
-            icon: new MyCustomMarker()
-        }
+        // marker: {
+        //     icon: new MyCustomMarker()
+        // }
     },
     edit: {
         featureGroup: editableLayers, //REQUIRED!!
-        remove: false
+        remove: true
     }
 };
 
@@ -63,4 +70,23 @@ map.on('draw:created', function (e) {
     }
 
     editableLayers.addLayer(layer);
+});
+
+
+
+map.on('draw:created', function (e) {
+    var type = e.layerType,
+        layer = e.layer;
+
+    console.log( e  );
+    console.log( JSON.stringify(layer.toGeoJSON()) );
+    console.log( L.stamp(layer) );
+    if (type === 'marker') {
+        console.log("hi");
+    }
+
+    console.log("hello");
+    // Do whatever else you need to. (save to db, add to map etc)
+
+    map.addLayer(layer);
 });
