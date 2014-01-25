@@ -2,7 +2,7 @@ Ens::Application.routes.draw do
 
   resources :notifications
 
-  get 'map_editor', to: "notifications#map_editor"
+  resources :geo
 
   resources :e911s
 

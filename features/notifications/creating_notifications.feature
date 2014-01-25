@@ -41,6 +41,7 @@ Then I should be able to send the notification
 Scenario: Selecting by geography
 When I create a new notification
 And I click on "Map"
-And I fill in "city:" with "Chicago"
+And on the map, I fill in "City:" with "Chicago"
 Then I should see "Chicago" on the map
-And the lat, long, and radius should be adjustable
+And I should be able to enter a these elements:
+| rectangle | polygon | polyline | marker |

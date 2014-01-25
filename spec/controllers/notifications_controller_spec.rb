@@ -1,6 +1,11 @@
 require 'spec_helper'
 describe NotificationsController do
 
+  it 'requires authentication' do
+    get :index
+    response.should be_redirect
+  end
+
   describe "new notification" do
     login_user(:admin)
     it "renders dcm_topics" do
@@ -10,12 +15,4 @@ describe NotificationsController do
     end
   end
 
-  describe "map editor" do
-    it "renders an iframe body" do
-      get :map_editor
-debugger
-      print page.body
-      page.should have_selector "#map"
-    end
-  end
 end

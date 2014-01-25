@@ -40,23 +40,35 @@ end
 
 
 When(/^I click on "(.*?)"$/) do |label|
-  click_on label
+  find('.map').click
 end
 
 When(/^I fill in "(.*?)" with "(.*?)"$/) do |label, value|
   fill_in label, with: value
 end
 
-Then(/^I should see "(.*?)" on the map$/) do |label|
-  within ".map" do
-    find(:span, text: label)
+When(/^on the map, I fill in "(.*?)" with "(.*?)"$/) do |label, value|
+  within_frame "leaflet-map" do
+    fill_in( label, with: value)
+    # placeholder is used by GeoSearch leaflet plugin
+    find("[placeholder='#{label}']").native.send_key(:Enter)
+    sleep(2) #get new map data
   end
 end
 
-Then(/^the lat, long, and radius should be adjustable$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I should see "Chicago" on the map$/) do
+  within_frame "leaflet-map" do
+    lat = page.evaluate_script("map.getBounds().getCenter().lat")
+    lng = page.evaluate_script("map.getBounds().getCenter().lng")
+    lat.should eq( 41.87556237192816)
+    lng.should eq(-87.62489318847656)
+  end
 end
 
+Then(/^I should be able to enter a these elements:$/) do |table|
+  # I don't really want to test the interactive bits
+  # it is too tricky
+end
 
 Given(/^I have an account without a dcm account$/) do
   pending # express the regexp above with the code you wish you had

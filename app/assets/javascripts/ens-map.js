@@ -23,12 +23,14 @@ map.addLayer(editableLayers);
 var options = {
     position: 'topright',
     draw: {
-        polyline: {
-            shapeOptions: {
-                color: '#f357a1',
-                weight: 10
-            }
-        },
+        polyline: undefined,
+
+        // polyline: {
+        //     shapeOptions: {
+        //         color: '#f357a1',
+        //         weight: 10
+        //     }
+        // },
         polygon: {
             allowIntersection: false, // Restricts shapes to simple polygons
             drawError: {
@@ -39,15 +41,17 @@ var options = {
                 color: '#bada55'
             }
         },
-
+        circle: undefined,
+        rectangle: undefined,
+        marker: undefined
         // note that geoJSON spec does not support circles
         // however- pointToLayer option and turning point features into circles, using the radius from feature.properties.
-        circle: false, // Turns off this drawing tool
-        rectangle: {
-            shapeOptions: {
-                clickable: false
-            }
-        },
+        // circle: false, // Turns off this drawing tool
+        // rectangle: {
+        //     shapeOptions: {
+        //         clickable: false
+        //     }
+        // },
         // marker: {
         //     icon: new MyCustomMarker()
         // }
@@ -90,3 +94,15 @@ map.on('draw:created', function (e) {
 
     map.addLayer(layer);
 });
+
+
+search_layer = new L.Control.GeoSearch({
+    provider: new L.GeoSearch.Provider.OpenStreetMap(),
+    position: 'bottomleft',
+    searchLabel: "City:",
+    zoomLevel:  10,
+    onRemove: function(){},
+}).addTo(map);
+
+
+map.addLayer(search_layer);

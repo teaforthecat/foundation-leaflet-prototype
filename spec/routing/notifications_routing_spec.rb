@@ -30,10 +30,5 @@ describe NotificationsController do
     it "routes to #destroy" do
       expect(:delete => "/notifications/1").to route_to("notifications#destroy", :id => "1")
     end
-
-    it "routes to #map_editor" do
-      expect(:get => "/map_editor").to route_to("notifications#map_editor")
-      expect(map_editor_path).to eql("/map_editor")
-    end
   end
 end
