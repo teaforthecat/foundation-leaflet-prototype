@@ -1,6 +1,6 @@
 var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-    cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
-    map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(-37.7772, 175.2756), zoom: 15 });
+cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
+map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(-37.7772, 175.2756), zoom: 15 });
 
 L.Icon.Default.imagePath = '/assets';
 
@@ -20,10 +20,11 @@ map.addLayer(editableLayers);
 //     }
 // });
 
-var options = {
+options = function(editableLayers) {
+    return {
     position: 'topright',
     draw: {
-        polyline: undefined,
+        polyline: false,
 
         // polyline: {
         //     shapeOptions: {
@@ -41,9 +42,9 @@ var options = {
                 color: '#bada55'
             }
         },
-        circle: undefined,
-        rectangle: undefined,
-        marker: undefined
+        circle: false,
+        rectangle: false,
+        marker: false
         // note that geoJSON spec does not support circles
         // however- pointToLayer option and turning point features into circles, using the radius from feature.properties.
         // circle: false, // Turns off this drawing tool
@@ -60,48 +61,59 @@ var options = {
         featureGroup: editableLayers, //REQUIRED!!
         remove: true
     }
-};
-
-var drawControl = new L.Control.Draw(options);
+    }; };
+var drawControl = new L.Control.Draw(options(editableLayers));
 map.addControl(drawControl);
 
-map.on('draw:created', function (e) {
-    var type = e.layerType,
-        layer = e.layer;
+function drawnItemHandler (layer){
+    var geo_path = $('#map').data('geo-path');
+    // GeoSearch plugin:
+    var search_value = $('#leaflet-control-geosearch-qry').value;
+    var map_bounds = map.getBounds();
+    var geoJson = layer.toGeoJSON();
+    var geo = $.extend(true, {}, geoJson,
+                       { properties: { search_value: search_value,
+                                       map_bounds: map_bounds}});
+    var really_json_really = JSON.parse(JSON.stringify(geo));
 
-    if (type === 'marker') {
-        layer.bindPopup('A popup!');
-    }
+    $.post( geo_path,
+            really_json_really,
+            function(response){
+                drawControl.removeFrom(map);
+                coords = response.geometry.coordinates;
+                response_layer = L.Polygon(coords);
+                console.log(response_layer);
 
-    editableLayers.addLayer(layer);
-});
+                editableLayers = new L.FeatureGroup();
+                map.addLayer(editableLayers);
+
+                // editableLayers.addLayer(response_layer);
+                geo_layer = L.geoJson(response);
+                editableLayers.addLayer(geo_layer);
+
+                // reinitialize editableLayers
+
+                // drawControl.addTo(map);
+                //overwrite variable
+                drawControl = new L.Control.Draw(options(editableLayers));
+                map.addControl(drawControl);
 
 
+            }
+          );
 
-map.on('draw:created', function (e) {
-    var type = e.layerType,
-        layer = e.layer;
+    // editableLayers.addLayer(layer);
+};
 
-    console.log( e  );
-    console.log( JSON.stringify(layer.toGeoJSON()) );
-    console.log( L.stamp(layer) );
-    if (type === 'marker') {
-        console.log("hi");
-    }
-
-    console.log("hello");
-    // Do whatever else you need to. (save to db, add to map etc)
-
-    map.addLayer(layer);
-});
-
+map.on('draw:created', function(e){ drawnItemHandler( e.layer ); });
+map.on('draw:edited', function(e){ e.layers.eachLayer( drawnItemHandler ); });
 
 search_layer = new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap(),
     position: 'bottomleft',
     searchLabel: "City:",
-    zoomLevel:  10,
-    onRemove: function(){},
+    zoomLevel:  10
+//    onRemove: function(){},
 }).addTo(map);
 
 
