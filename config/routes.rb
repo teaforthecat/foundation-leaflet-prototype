@@ -1,5 +1,7 @@
 Ens::Application.routes.draw do
 
+  resources :geos
+
   resources :notifications
 
   resources :geo

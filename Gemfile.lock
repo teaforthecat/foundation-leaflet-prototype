@@ -6,6 +6,14 @@ GIT
       railties (>= 3.1.0)
       sass (>= 3.2.0)
 
+GIT
+  remote: git://github.com/dewski/json_builder.git
+  revision: ed32ee1d1cf393aaab045c0da2de39c0fad135dc
+  specs:
+    json_builder (3.1.7)
+      activesupport (>= 2.0.0)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -106,7 +114,6 @@ GEM
     formatador (0.2.4)
     gherkin (2.12.2)
       multi_json (~> 1.3)
-    gmaps4rails (2.1.1)
     guard (2.2.5)
       formatador (>= 0.2.4)
       listen (~> 2.1)
@@ -128,9 +135,6 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
-    jbuilder (1.5.3)
-      activesupport (>= 3.0.0)
-      multi_json (>= 1.2.0)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -202,6 +206,10 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
+    roo (1.13.2)
+      nokogiri
+      rubyzip
+      spreadsheet (> 0.6.4)
     rspec (3.0.0.beta1)
       rspec-core (= 3.0.0.beta1)
       rspec-expectations (= 3.0.0.beta1)
@@ -225,6 +233,8 @@ GEM
       rspec-expectations (= 3.0.0.beta1)
       rspec-mocks (= 3.0.0.beta1)
     rspec-support (3.0.0.beta1)
+    ruby-ole (1.2.11.7)
+    rubyzip (1.1.0)
     safe_yaml (0.9.7)
     sass (3.2.13)
     sass-rails (4.0.1)
@@ -239,6 +249,8 @@ GEM
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     slop (3.4.7)
+    spreadsheet (0.9.6)
+      ruby-ole (>= 1.0)
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -308,12 +320,11 @@ DEPENDENCIES
   devise
   factory_girl_rails
   foundation-rails!
-  gmaps4rails
   guard-rspec
   haml-rails
   httparty
-  jbuilder (~> 1.2)
   jquery-rails
+  json_builder!
   leaflet-js
   mysql2
   paper_trail (~> 3.0)
@@ -322,6 +333,7 @@ DEPENDENCIES
   pry
   quiet_assets
   rails (= 4.0.2)
+  roo
   rspec-rails (~> 3.0.0.beta)
   sass-rails (~> 4.0.0)
   simple_form

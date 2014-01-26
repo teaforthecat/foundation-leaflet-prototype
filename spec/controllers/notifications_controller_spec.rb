@@ -2,8 +2,10 @@ require 'spec_helper'
 describe NotificationsController do
 
   it 'requires authentication' do
-    get :index
-    response.should be_redirect
+    [:index, :new].each do |action|
+      get action
+      response.should be_redirect
+    end
   end
 
   describe "new notification" do

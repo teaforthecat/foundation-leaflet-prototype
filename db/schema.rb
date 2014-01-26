@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140120122422) do
+ActiveRecord::Schema.define(version: 20140126202128) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -42,14 +42,32 @@ ActiveRecord::Schema.define(version: 20140120122422) do
   add_index "e911s_notifications", ["e911_id"], name: "index_e911s_notifications_on_e911_id", using: :btree
   add_index "e911s_notifications", ["notification_id"], name: "index_e911s_notifications_on_notification_id", using: :btree
 
+  create_table "geos", force: true do |t|
+    t.string   "type"
+    t.string   "shape"
+    t.string   "search_value"
+    t.string   "map_bounds"
+    t.text     "coordinates"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "geojson"
+    t.integer  "notification_id"
+    t.integer  "account_id"
+  end
+
+  add_index "geos", ["account_id"], name: "index_geos_on_account_id", using: :btree
+  add_index "geos", ["notification_id"], name: "index_geos_on_notification_id", using: :btree
+
   create_table "notifications", force: true do |t|
     t.integer  "dcm_topic_id"
     t.string   "dcm_account_code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "message"
+    t.integer  "account_id"
   end
 
+  add_index "notifications", ["account_id"], name: "index_notifications_on_account_id", using: :btree
   add_index "notifications", ["dcm_account_code"], name: "index_notifications_on_dcm_account_code", unique: true, using: :btree
 
   create_table "users", force: true do |t|

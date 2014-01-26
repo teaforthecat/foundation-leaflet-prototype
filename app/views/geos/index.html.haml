@@ -1,0 +1,17 @@
+%h1 Listing geos
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @geos.each do |geo|
+    %tr
+      %td= link_to 'Show', geo
+      %td= link_to 'Edit', edit_geo_path(geo)
+      %td= link_to 'Destroy', geo, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Geo', new_geo_path

@@ -7,55 +7,21 @@ L.Icon.Default.imagePath = '/assets';
 var editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
-
-// default values. for example only.
-// var MyCustomMarker = L.Icon.extend({
-//     options: {
-//         iconUrl: '/assets/marker-icon'+ (L.Browser.retna ? '-2x': '') +'.png', //TODO: handle retna?
-//         shadowUrl: '/assets/marker-shadow.png',
-//         shadowSize: [41, 41],
-//         iconAnchor: [12, 41],
-//         iconSize: [25, 41],
-//         popupAnchor: [1, -34]
-//     }
-// });
-
 options = function(editableLayers) {
     return {
     position: 'topright',
     draw: {
-        polyline: false,
 
-        // polyline: {
-        //     shapeOptions: {
-        //         color: '#f357a1',
-        //         weight: 10
-        //     }
-        // },
-        polygon: {
-            allowIntersection: false, // Restricts shapes to simple polygons
-            drawError: {
-                color: '#e1e100', // Color the shape will turn when intersects
-                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
-            },
-            shapeOptions: {
-                color: '#bada55'
-            }
-        },
-        circle: false,
-        rectangle: false,
-        marker: false
-        // note that geoJSON spec does not support circles
-        // however- pointToLayer option and turning point features into circles, using the radius from feature.properties.
-        // circle: false, // Turns off this drawing tool
         // rectangle: {
-        //     shapeOptions: {
-        //         clickable: false
-        //     }
-        // },
-        // marker: {
-        //     icon: new MyCustomMarker()
+        //     shape_options: {
+        //     color: "something"
         // }
+        // },
+        //use default rectangle only
+        polygon: false,
+        polyline: false,
+        circle: false,
+        marker: false
     },
     edit: {
         featureGroup: editableLayers, //REQUIRED!!
@@ -67,46 +33,36 @@ map.addControl(drawControl);
 
 function drawnItemHandler (layer){
     var geo_path = $('#map').data('geo-path');
+    var really_json_really = build_json(layer)
+
+
+    $.post( geo_path,
+            {geo: really_json_really},
+            function(response){
+                //message?
+                console.log(response)
+            },
+          );
+
+    editableLayers.addLayer(layer);
+};
+
+function build_json(layer) {
     // GeoSearch plugin:
     var search_value = $('#leaflet-control-geosearch-qry').value;
+    //global map
     var map_bounds = map.getBounds();
     var geoJson = layer.toGeoJSON();
     var geo = $.extend(true, {}, geoJson,
                        { properties: { search_value: search_value,
                                        map_bounds: map_bounds}});
-    var really_json_really = JSON.parse(JSON.stringify(geo));
-
-    $.post( geo_path,
-            really_json_really,
-            function(response){
-                drawControl.removeFrom(map);
-                coords = response.geometry.coordinates;
-                response_layer = L.Polygon(coords);
-                console.log(response_layer);
-
-                editableLayers = new L.FeatureGroup();
-                map.addLayer(editableLayers);
-
-                // editableLayers.addLayer(response_layer);
-                geo_layer = L.geoJson(response);
-                editableLayers.addLayer(geo_layer);
-
-                // reinitialize editableLayers
-
-                // drawControl.addTo(map);
-                //overwrite variable
-                drawControl = new L.Control.Draw(options(editableLayers));
-                map.addControl(drawControl);
-
-
-            }
-          );
-
-    // editableLayers.addLayer(layer);
-};
+    // purge functions
+    return JSON.parse(JSON.stringify(geo));
+ }
 
 map.on('draw:created', function(e){ drawnItemHandler( e.layer ); });
 map.on('draw:edited', function(e){ e.layers.eachLayer( drawnItemHandler ); });
+map.on('draw:deleted', function(e){ deletedItemHandler(e.layer) });
 
 search_layer = new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap(),
@@ -118,3 +74,24 @@ search_layer = new L.Control.GeoSearch({
 
 
 map.addLayer(search_layer);
+
+
+                // drawControl.removeFrom(map);
+                // coords = response.geometry.coordinates;
+                // response_layer = L.Polygon(coords);
+                // console.log(response_layer);
+
+                // editableLayers2 = new L.FeatureGroup();
+                // map.addLayer(editableLayers2);
+
+                // // editableLayers.addLayer(response_layer);
+                // // geo_layer = L.geoJson(response);
+                // response_poly = L.
+                // editableLayers.addLayer(geo_layer);
+
+                // // reinitialize editableLayers
+
+                // // drawControl.addTo(map);
+                // //overwrite variable
+                // drawControl = new L.Control.Draw(options(editableLayers));
+                // map.addControl(drawControl);

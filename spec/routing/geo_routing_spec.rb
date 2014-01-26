@@ -9,6 +9,7 @@ describe GeoController do
       expect(:get => "/geo/abc123").to route_to("geo#show", id: 'abc123')
       expect(:post => "/geo").to route_to("geo#create")
       expect(:update => "/geo").not_to be_routable
+
     end
   end
 end

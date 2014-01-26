@@ -51,6 +51,7 @@ When(/^on the map, I fill in "(.*?)" with "(.*?)"$/) do |label, value|
   within_frame "leaflet-map" do
     fill_in( label, with: value)
     # placeholder is used by GeoSearch leaflet plugin
+    # aka: .leaflet-control-geosearch-qry
     find("[placeholder='#{label}']").native.send_key(:Enter)
     sleep(2) #get new map data
   end
@@ -68,12 +69,4 @@ end
 Then(/^I should be able to enter a these elements:$/) do |table|
   # I don't really want to test the interactive bits
   # it is too tricky
-end
-
-Given(/^I have an account without a dcm account$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^I should not see "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
 end

@@ -4,9 +4,10 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     = stylesheet_link_tag "leaflet-js"
     = javascript_include_tag "vendor/modernizr"
+    = javascript_include_tag "jquery"
+    = javascript_include_tag "jquery_ujs"
     = javascript_include_tag "early_load"
     = csrf_meta_tag
   %body
-    #map{style: 'height: 256px'}
-      this page requires javascript
+    = yield(:map)
     = javascript_include_tag "ens-map"

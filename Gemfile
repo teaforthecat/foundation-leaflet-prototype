@@ -12,21 +12,24 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 
-gem 'jbuilder', '~> 1.2'
+# looks like 3.1.7 missed out on key pr #45
+gem 'json_builder', github: 'dewski/json_builder'
 gem 'haml-rails'
 
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'unicorn-rails'
+
 gem 'httparty'
 gem 'paperclip'
 gem 'paper_trail', '~> 3.0'
+gem 'roo'
+
 gem 'will_paginate', '~> 3.0'
-# gem 'rich' #not compatible with simple form yet
 gem 'ckeditor_rails'
-# gem 'geokit-rails'
-gem 'gmaps4rails'
 gem 'underscore-rails'
 gem 'leaflet-js'
+
+
 
 gem 'devise'
 gem 'simple_form'
