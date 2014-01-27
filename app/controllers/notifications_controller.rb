@@ -14,9 +14,11 @@ class NotificationsController < ApplicationController
   end
 
   def new
+    #temporary pointer to join objects because geo is saved from an an iframe
     @sse_channel = SecureRandom.hex(8)
     Rails.cache.write(@sse_channel, "{}")
-    @notification = Notification.new
+    @notification = Notification.new(sse_channel: @sse_channel)
+    @geo = @notification.build_geo(sse_channel: @sse_channel)
   end
 
   def edit
