@@ -1,1 +1,1 @@
-vendor/assets/EventSource/eventsource.js
+/Users/cthompson/projects/ens/vendor/EventSource/eventsource.js

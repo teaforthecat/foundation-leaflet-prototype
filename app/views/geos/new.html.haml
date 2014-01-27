@@ -1,5 +1,1 @@
-%h1 New geo
-
-= render 'form'
-
-= link_to 'Back', geos_path
+= render 'map', geo_path: pub_geo_path(@sse_channel)+'.json'

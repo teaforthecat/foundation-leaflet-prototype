@@ -1,6 +1,10 @@
-var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
-cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
-map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(-37.7772, 175.2756), zoom: 15 });
+if ($('#geojson-serialized')) {
+   console.log( $('#geojson-serialized').value);
+}
+
+var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png'
+var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
+window.map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(-37.7772, 175.2756), zoom: 15 });
 
 L.Icon.Default.imagePath = '/assets';
 
@@ -33,19 +37,22 @@ map.addControl(drawControl);
 
 function drawnItemHandler (layer){
     var geo_path = $('#map').data('geo-path');
+    // var sse_channel = $('#map').data('sse-channel');
     var really_json_really = build_json(layer)
 
 
     $.post( geo_path,
-            {geo: really_json_really},
+            {geo: {geojson: really_json_really}},
+             // sse_channel: sse_channel},
             function(response){
                 //message?
                 console.log(response)
-            },
+            }
           );
 
     editableLayers.addLayer(layer);
 };
+
 
 function build_json(layer) {
     // GeoSearch plugin:

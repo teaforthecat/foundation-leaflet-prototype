@@ -1,7 +1,1 @@
-%h1 Editing geo
-
-= render 'form'
-
-= link_to 'Show', @geo
-\|
-= link_to 'Back', geos_path
+= render 'map', geo_path: pub_geo_path(@sse_channel)+'.json'

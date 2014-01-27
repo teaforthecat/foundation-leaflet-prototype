@@ -14,17 +14,23 @@ class NotificationsController < ApplicationController
   end
 
   def new
+    @sse_channel = SecureRandom.hex(8)
+    Rails.cache.write(@sse_channel, "{}")
     @notification = Notification.new
   end
 
   def edit
+    @sse_channel = SecureRandom.hex(8)
+    Rails.cache.write(@sse_channel, "{}")
   end
 
   def create
     @notification = Notification.new(notification_params)
-
+    @notification.account = current_user.account
+    @geo = @notification.build_geo geo_params.fetch("geo")
+    @geo.account = current_user.account
     respond_to do |format|
-      if @notification.save
+      if @notification.save! && @geo.save!
         format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
         format.json { render action: 'show', status: :created, location: @notification }
       else
@@ -35,8 +41,11 @@ class NotificationsController < ApplicationController
   end
 
   def update
+    @notification = Notification.new(notification_params)
+    @geo = @notification.build_geo geo_params.fetch("geo")
+    @geo.account = current_user.account
     respond_to do |format|
-      if @notification.update(notification_params)
+      if @notification.update!(notification_params) && @geo.save!
         format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }
         format.json { head :no_content }
       else
@@ -76,6 +85,12 @@ class NotificationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def notification_params
-      params.require(:notification).permit(:dcm_topic_id, :dcm_account_code)
+      params.require("notification").
+        permit( :message, :dcm_topic_id)
+
+    end
+
+    def geo_params
+      params.require(:notification).permit({geo: :geojson})
     end
 end

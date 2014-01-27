@@ -18,7 +18,8 @@ gem 'haml-rails'
 
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'unicorn-rails'
-
+gem 'puma'
+gem 'dalli'
 gem 'httparty'
 gem 'paperclip'
 gem 'paper_trail', '~> 3.0'

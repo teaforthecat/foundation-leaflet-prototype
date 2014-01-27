@@ -8,13 +8,15 @@
       .row
         = f.input :e911s, label: "e911 Subscriber List",
           as: :select, collection: @current_user.account.e911s,
-          input_html: {multiple: true}
+          include_blank: true #, input_html: {multiple: true},
       .row
-        = label_tag :city, "City:"
-        = text_field_tag :city
+        = f.fields_for :geo do |ff|
+          = ff.input :geojson, as: :hidden, input_html: {id: 'geojson-serialized'}
         %a.map.button{'data-request' => 'iframe-map'}= 'Map'
         .ens-map-editor
-          %iframe#leaflet-map{src: new_geo_path,
+          -# data is posted to src, while subscribing to sub_geo_path to get it
+          %iframe#leaflet-map{src: geo_src_path(@notification, iframe: true, sse_channel: @sse_channel),
+            data: {sse_channel: sub_geo_path(@sse_channel, format: :json)},
             width: 425,
             height: 350,
             frameborder: 0,

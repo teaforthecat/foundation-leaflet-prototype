@@ -1,10 +1,13 @@
 Ens::Application.routes.draw do
 
-  resources :geos
+  resources :geos do
+    member do
+      post :pub
+      get :sub
+    end
+  end
 
   resources :notifications
-
-  resources :geo
 
   resources :e911s
 

@@ -1,1 +1,1 @@
-#map{style: 'height: 256px', data: {'geo-path' =>  geo_index_path(format: :json) }}
+= render 'map', geo_path: pub_geo_path(@sse_channel)+'.json'

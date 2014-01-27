@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   ROLES = %w[account_admin admin]
 
   belongs_to :account
+  # TODO: validates_presence_of :account
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

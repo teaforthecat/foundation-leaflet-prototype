@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require foundation
 //= require ckeditor-jquery
+//= require eventsource
+//= require notification
 
 $(function() {
   $(document).foundation();
