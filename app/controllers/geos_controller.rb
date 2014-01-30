@@ -1,7 +1,6 @@
 class GeosController < ApplicationController
   before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token, only: [:pub,:sub]
-
+  before_action :require_account!
   before_action :set_geo, only: [:show, :edit, :update, :destroy]
 
   include Pagination
@@ -19,8 +18,13 @@ class GeosController < ApplicationController
   end
 
   def new
-    @sse_channel = params[:sse_channel] or raise "No sse_channel in params"
-    @geo = Geo.new
+    @sse_channel = params[:sse_channel] #or raise "No sse_channel in params"
+    respond_to do |f|
+      f.html {
+        @geo = Geo.new(account_id: current_user.account_id)
+      }
+      f.json { head :bad_request }
+    end
   end
 
   def edit
@@ -29,6 +33,7 @@ class GeosController < ApplicationController
 
   def create
     @geo = Geo.new(geo_params)
+    @geo.geojson = JSON.parse(geo_params["geojson"])
     @geo.account = current_user.account
     if @geo.save!
       redirect_to @geo, notice: 'Geo was successfully created.'
@@ -58,7 +63,7 @@ class GeosController < ApplicationController
   end
 
   def geo_params
-    params.require(:geo).permit(:geo_json)
+    params.require(:geo).permit(:geojson, :notification_id)
   end
 
 end

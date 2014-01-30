@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140126202128) do
+ActiveRecord::Schema.define(version: 20140130081139) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20140126202128) do
     t.text     "geojson"
     t.integer  "notification_id"
     t.integer  "account_id"
+    t.string   "sse_channel"
   end
 
   add_index "geos", ["account_id"], name: "index_geos_on_account_id", using: :btree
@@ -65,6 +66,7 @@ ActiveRecord::Schema.define(version: 20140126202128) do
     t.datetime "updated_at"
     t.text     "message"
     t.integer  "account_id"
+    t.string   "sse_channel"
   end
 
   add_index "notifications", ["account_id"], name: "index_notifications_on_account_id", using: :btree

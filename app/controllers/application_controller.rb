@@ -4,4 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
 
+  def require_account!
+    redirect_to root_path unless current_user.try(:account_id)
+  end
 end

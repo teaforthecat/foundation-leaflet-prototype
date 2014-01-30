@@ -2,12 +2,10 @@ class NotificationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
   before_action :set_dcm_topics, only: [:new, :show, :edit]
-
+  include Pagination
 
   def index
-    page, per_page = (params[:page].try(:to_i) || 1),
-                     (params[:per_page].try(:to_i) || 20)
-    @notifications = Notification.where(account_id: current_user.account_id).paginate( page: page, per_page: per_page)
+    @notifications = Notification.where(account_id: current_user.account_id).paginate( pagination_args )
   end
 
   def show

@@ -2,34 +2,44 @@ require 'spec_helper'
 
 describe GeosController do
 
-  it_behaves_like "paginated"
-
-  it 'requires authentication' do
-    get :index
-    response.should be_redirect
+  context 'not logged in' do
+    it 'requires authentication' do
+      get :index
+      response.should be_redirect
+    end
   end
 
-  describe "map editor" do
-
-    # render_views
-    # login_user(:admin)
-    # it "renders an specified map" do
-    #   geo = build_stubbed(:geo)
-    #   expect(Geo).to receive(:find).and_return(geo)
-    #   get :show, id: geo.id
-    #   response.body.should have_selector "#map"
-    #   assigns(:geo).should_not be_nil
-    # end
-
-    # it "accepts an json post of a map" do
-    #   post :create, id: 3456, format: :json
-    #   response.content_type.should eq('application/json')
-    # end
-
-    # it "accepts geojson as a post body" do
-    #   post :create, id: 3456, format: :json
-    #   response.should be_success
-    # end
+  context "paginated" do
+    login_user
+    it_behaves_like "paginated"
   end
 
+  context 'logged in' do
+    login_user(:admin)
+
+    describe "GET new" do
+      it "should assign account_id" do
+        get :new
+        response.should be_success
+        assigns(:geo).account_id.should_not be_nil
+      end
+
+      it "doesn't respond to json" do
+        get :new, format: :json
+        response.should_not be_success
+      end
+    end
+
+    describe "POST create" do
+      it "saves a geo model" do
+        notification = create(:notification)
+        post :create, geo:
+          { geojson: %q[{"properties": "", "geometry": "", "type": ""}],
+           notification_id: notification.id }
+        response.should be_redirect
+      end
+      # TODO: post with json
+      # TODO: rescue JSON.parse error
+    end
+  end
 end

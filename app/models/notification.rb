@@ -8,7 +8,7 @@ class Notification < ActiveRecord::Base
   before_save :join_geo, if: :new_record?
 
   def join_geo
-    self.geo ||= Geo.find(sse_channel: self.sse_channel)
+    self.geo ||= Geo.where(sse_channel: self.sse_channel).first
   end
 
 end

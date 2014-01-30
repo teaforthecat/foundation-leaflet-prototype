@@ -13,6 +13,7 @@ class Geo < ActiveRecord::Base
 
 
   def valid_geojson?
-    ["type", "properties", "geometry"].all?{|k| JSON.parse(geojson).member?(k)}
+    %W[ type properties geometry ].
+      all?{|k| geojson.member?(k)}
   end
 end
