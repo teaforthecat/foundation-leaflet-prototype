@@ -37,7 +37,7 @@ geojsony = {
 
 
 var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png'
-var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
+var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 15});
 
 
 
@@ -45,7 +45,10 @@ var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
 geo_layer = L.geoJson(geojsony);
 // geo_layer = L.GeoJson.geometryToLayer(geojsony); older version perhaps
 
-window.map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(-37.7772, 175.2756), zoom: 15 });
+// var center = L.latLngBounds(southWest, northEast).getCenter();
+window.map = new L.Map('map', {layers: [cloudmade],
+                               center: new L.LatLng(-37.7772, 175.2756),
+                               zoom: 15 });
 
 L.Icon.Default.imagePath = '/assets';
 
@@ -111,13 +114,15 @@ function build_json(layer) {
     var search_value = $('#leaflet-control-geosearch-qry').value;
     //global map
     var map_bounds = map.getBounds();
+    var zoom = map.getZoom();
     var geoJson = layer.toGeoJSON();
     var geo = $.extend(true, {}, geoJson,
                        { properties: { search_value: search_value,
-                                       map_bounds: map_bounds}});
+                                       map_bounds: map_bounds,
+                                       zoom: zoom}});
     // purge functions
     return JSON.parse(JSON.stringify(geo));
- }
+}
 
 map.on('draw:created', function(e){ drawnItemHandler( e.layer ); });
 map.on('draw:edited', function(e){ e.layers.eachLayer( drawnItemHandler ); });

@@ -38,6 +38,20 @@ describe GeosController do
            notification_id: notification.id }
         response.should be_redirect
       end
+
+      def new_valid_attributes
+        { geo:
+          { geojson: %q[{"properties": "", "geometry": "", "type": ""}],
+           sse_channel: 'whatever' }}
+      end
+
+      it "can create a geo from the map_editor" do
+        post :create, new_valid_attributes.merge(format: :json)
+        response.should be_success
+        assigns(:geo).should have_account
+        assigns(:geo).should have_geojson
+      end
+
       # TODO: post with json
       # TODO: rescue JSON.parse error
     end

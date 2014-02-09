@@ -4,7 +4,8 @@ class GeosController < ApplicationController
   before_action :set_geo, only: [:show, :edit, :update, :destroy]
 
   include Pagination
-  layout ->{ params[:iframe] ? 'geo_iframe' : 'application' }
+  # layout ->{ params[:iframe] ? 'geo_iframe' : 'application' }
+  layout 'geo_iframe'
   # must wrap routes: https://github.com/plataformatec/devise/issues/2332
   # if you want to use Live
   # include ActionController::Live # problem with authenticate_user!
@@ -28,7 +29,7 @@ class GeosController < ApplicationController
   end
 
   def edit
-    @sse_channel = params[:sse_channel] or raise "No sse_channel in params"
+    # @sse_channel = params[:sse_channel] or raise "No sse_channel in params"
   end
 
   def create

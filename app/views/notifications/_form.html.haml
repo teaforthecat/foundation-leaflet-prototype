@@ -12,20 +12,36 @@
       .row
         = f.fields_for :geo do |ff|
           = ff.input :geojson, as: :hidden, input_html: {id: 'geojson-serialized'}
-        %a.map.button{'data-request' => 'iframe-map'}= 'Map'
-        .ens-map-editor
-          -# data is posted to src, while subscribing to sub_geo_path to get it
-          %iframe#leaflet-map{src: geo_src_path(@notification, iframe: true, sse_channel: @sse_channel),
-            data: {sse_channel: sub_geo_path(@sse_channel, format: :json)},
-            width: 425,
-            height: 350,
+
+        -# inline working
+        -# %a.map.button{'data-request' => 'iframe-map'}= 'Map'
+        -# .ens-map-editor
+        -#   -# width is from medium-6.columns above, height is random
+        -#   %iframe#leaflet-map{src: new_geo_path(sse_channel: @sse_channel),
+        -#     width: 425,
+        -#     height: 350,
+        -#     frameborder: 0,
+        -#     scrolling: 'no',
+        -#     marginheight: 0,
+        -#     marginwidth:  0}
+
+        %a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
+          open map
+        #ensMap.reveal-modal.xlarge{data: {reveal: true}, style: 'height: 70%;'}
+          -# width is from medium-6.columns above, height is random
+          .close-reveal-modal!= '&#215;'
+          %iframe#leaflet-map{src: new_geo_path(sse_channel: @sse_channel),
+            width: '100%',
+            height: '100%',
             frameborder: 0,
             scrolling: 'no',
             marginheight: 0,
             marginwidth:  0}
 
+
     .medium-6.columns
       .ens-message-editor
+        = f.label :message
         = f.input_field :message, as: :text, class: 'ckeditor'
 
   .form-actions

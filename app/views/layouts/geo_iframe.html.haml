@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
     = stylesheet_link_tag "leaflet-js"
     = javascript_include_tag "vendor/modernizr"
     = javascript_include_tag "jquery"
@@ -9,5 +9,14 @@
     = javascript_include_tag "early_load"
     = csrf_meta_tag
   %body
+    :css
+      body {
+          padding: 0;
+          margin: 0;
+      }
+      html, body, #map {
+          height: 100%;
+      }
+
     = yield
     = javascript_include_tag "ens-map"
