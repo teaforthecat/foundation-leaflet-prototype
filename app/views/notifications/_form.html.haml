@@ -27,7 +27,7 @@
 
         %a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
           open map
-        #ensMap.reveal-modal.xlarge{data: {reveal: true}, style: 'height: 70%;'}
+        #ensMap.reveal-modal.xlarge{data: {reveal: true}, style: 'height: 100%;'}
           -# width is from medium-6.columns above, height is random
           .close-reveal-modal!= '&#215;'
           %iframe#leaflet-map{src: new_geo_path(sse_channel: @sse_channel),

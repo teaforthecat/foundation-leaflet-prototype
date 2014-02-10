@@ -5,7 +5,6 @@ FactoryGirl.define do
     search_value "Saint Paul, Mn"
     map_bounds ""
     geojson { JSON.parse(open('spec/fixtures/geo.json').read) }
-    notification
     account
   end
 end

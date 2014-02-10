@@ -1,13 +1,7 @@
 /*= require_self */
 
-
 /* imports */
 @import "foundation_overrides";
-@import "foundation";
+@import "foundation-";
 @import "navigation";
 @import "footer";
-
-
-main.row {
-  padding: 30px;
-}

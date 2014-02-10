@@ -2,9 +2,8 @@ class Geo < ActiveRecord::Base
   # geojson: :properties, :type, :geometry{:type,:coordinates}
   # other: :search_value, :map_bounds
   serialize :geojson, JSON
-  belongs_to :notification
+  has_many :notifications
   belongs_to :account
-  validates_presence_of :notification
   validates_presence_of :account
   validates_presence_of :geojson
   validate :valid_geojson?
@@ -13,7 +12,7 @@ class Geo < ActiveRecord::Base
 
 
   def valid_geojson?
-    %W[ type properties geometry ].
+   geojson.present? &&  %W[ type properties geometry ].
       all?{|k| geojson.member?(k)}
   end
 end

@@ -34,26 +34,39 @@ describe GeosController do
       it "saves a geo model" do
         notification = create(:notification)
         post :create, geo:
-          { geojson: %q[{"properties": "", "geometry": "", "type": ""}],
-           notification_id: notification.id }
+          { geojson: {properties: "", geometry: "", type: ""},}
         response.should be_redirect
       end
 
       def new_valid_attributes
         { geo:
-          { geojson: %q[{"properties": "", "geometry": "", "type": ""}],
-           sse_channel: 'whatever' }}
+          { geojson: {properties: "", geometry: "", type: ""},
+            sse_channel: 'abcd123',
+           }}
       end
 
       it "can create a geo from the map_editor" do
         post :create, new_valid_attributes.merge(format: :json)
-        response.should be_success
-        assigns(:geo).should have_account
-        assigns(:geo).should have_geojson
+        response.should be_redirect
+        assigns(:geo).account.should_not be_nil
+        assigns(:geo).geojson.should_not be_nil
       end
-
-      # TODO: post with json
       # TODO: rescue JSON.parse error
+    end
+
+    describe "GET edit" do
+      render_views
+
+      it "renders for an iframe with json on it to build a map from" do
+        geo = build_stubbed(:geo)
+        expect(Geo).to receive(:find).and_return(geo)
+        get :edit, id: geo.id, iframe: true
+        response.should be_success
+        response.should render_template( :edit )
+        response.should render_template( layout: :geo_iframe)
+        # one for html, one for json
+        response.should render_template( partial: '_map', count: 2)
+      end
     end
   end
 end

@@ -1,8 +1,8 @@
 class Notification < ActiveRecord::Base
 
   belongs_to :account
+  belongs_to :geo
   has_and_belongs_to_many :e911s
-  has_one :geo
 
 
   before_save :join_geo, if: :new_record?

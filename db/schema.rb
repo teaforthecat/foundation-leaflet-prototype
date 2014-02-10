@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140130081139) do
+ActiveRecord::Schema.define(version: 20140209224321) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20140130081139) do
     t.integer  "notification_id"
     t.integer  "account_id"
     t.string   "sse_channel"
+    t.string   "name"
   end
 
   add_index "geos", ["account_id"], name: "index_geos_on_account_id", using: :btree
@@ -67,10 +68,12 @@ ActiveRecord::Schema.define(version: 20140130081139) do
     t.text     "message"
     t.integer  "account_id"
     t.string   "sse_channel"
+    t.integer  "geo_id"
   end
 
   add_index "notifications", ["account_id"], name: "index_notifications_on_account_id", using: :btree
   add_index "notifications", ["dcm_account_code"], name: "index_notifications_on_dcm_account_code", unique: true, using: :btree
+  add_index "notifications", ["geo_id"], name: "index_notifications_on_geo_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

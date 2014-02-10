@@ -4,8 +4,8 @@ class GeosController < ApplicationController
   before_action :set_geo, only: [:show, :edit, :update, :destroy]
 
   include Pagination
-  # layout ->{ params[:iframe] ? 'geo_iframe' : 'application' }
-  layout 'geo_iframe'
+  layout ->{ params[:iframe] ? 'geo_iframe' : 'application' }
+  # layout 'geo_iframe'
   # must wrap routes: https://github.com/plataformatec/devise/issues/2332
   # if you want to use Live
   # include ActionController::Live # problem with authenticate_user!
@@ -15,11 +15,11 @@ class GeosController < ApplicationController
   end
 
   def show
-    @sse_channel = params[:sse_channel] or raise "No sse_channel in params"
+    render :edit
   end
 
   def new
-    @sse_channel = params[:sse_channel] #or raise "No sse_channel in params"
+    @sse_channel = params[:sse_channel]
     respond_to do |f|
       f.html {
         @geo = Geo.new(account_id: current_user.account_id)
@@ -29,12 +29,10 @@ class GeosController < ApplicationController
   end
 
   def edit
-    # @sse_channel = params[:sse_channel] or raise "No sse_channel in params"
   end
 
   def create
     @geo = Geo.new(geo_params)
-    @geo.geojson = JSON.parse(geo_params["geojson"])
     @geo.account = current_user.account
     if @geo.save!
       redirect_to @geo, notice: 'Geo was successfully created.'
@@ -45,9 +43,9 @@ class GeosController < ApplicationController
 
   def update
     if @geo.update!(geo_params)
-      redirect_to @geo, notice: 'Geo was successfully updated.'
+      render action: 'edit', notice: 'Geo was successfully updated.'
     else
-      render action: 'edit'
+      render action: 'edit', notice: 'There was a problem with the update'
     end
   end
 
@@ -64,7 +62,9 @@ class GeosController < ApplicationController
   end
 
   def geo_params
-    params.require(:geo).permit(:geojson, :notification_id)
+    permitted = params.require(:geo)
+    permitted.permit(:geojson).permit! #nested structure
+    permitted.permit! # FIXME: why do we have to permit everything?
   end
 
 end

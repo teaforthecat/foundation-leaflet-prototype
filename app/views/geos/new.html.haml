@@ -1,1 +1,6 @@
-= render 'map', path: geos_path #POST to :create
+- if params[:iframe]
+  = render 'map', path: geos_path #POST to :create
+- else
+  = render 'form'
+  %a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
+  = render 'map_modal', modal_id: 'ensMap', src: new_geo_path(iframe: true)

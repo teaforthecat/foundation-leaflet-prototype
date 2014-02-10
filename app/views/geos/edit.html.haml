@@ -1,1 +1,12 @@
-= render 'map', path: geo_path(@geo)
+- if params[:iframe]
+  = render 'map', path: geo_path(@geo)
+  #currentGeoObject{'data-geo' => @geo.geojson.to_json}
+  :javascript
+    $('#currentGeoObject').data( 'geo', #{ @geo.geojson.to_json });
+  -# window.current_geo_object = #{render partial: 'map', formats: 'json'}
+  -# warning: the format is set to json now :)
+- else
+  = render 'form'
+  %a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
+    Edit Map
+  = render 'map_modal', modal_id: 'ensMap', src: edit_geo_path(iframe: true)
