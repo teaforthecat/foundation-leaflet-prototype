@@ -2,6 +2,7 @@ class GeosController < ApplicationController
   before_action :authenticate_user!
   before_action :require_account!
   before_action :set_geo, only: [:show, :edit, :update, :destroy]
+  before_action :correct_geo_coords, only: [:create, :update]
 
   include Pagination
   layout ->{ params[:iframe] ? 'geo_iframe' : 'application' }
@@ -67,4 +68,14 @@ class GeosController < ApplicationController
     permitted.permit! # FIXME: why do we have to permit everything?
   end
 
+  # jQuery post and rack params are not argreeing with each other
+  # so we need to force the coordinates to be an array
+  # or the geojson map display won't be work
+  def correct_geo_coords
+    coords = params.seek :geo, :geojson, :geometry, :coordinates
+    if coords
+      array = GeosHelper.geo_coords_to_array(coords)
+      params[:geo][:geojson][:geometry][:coordinates] = array
+    end
+  end
 end

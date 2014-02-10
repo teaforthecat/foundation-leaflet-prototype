@@ -11,9 +11,7 @@ L.Icon.Default.imagePath = '/assets';
 // global
 if ( $('#currentGeoObject').data( 'geo' ) ) {
     geojsony = $('#currentGeoObject').data( 'geo' );
-    console.log( geojsony );
     var editableLayers = L.geoJson(geojsony).addTo(window.map);
-    console.log(editableLayers);
 } else {
     var editableLayers = new L.FeatureGroup();
 }
@@ -67,13 +65,15 @@ function drawnItemHandler (layer){
 
     $.post( geo_path,
             {geo: {geojson: really_json}},
+
             // sse_channel: sse_channel},
             function(response){
                 var jacked = humane.create({
                     baseCls: 'humane-jackedup',
                     addnCls: 'humane-jackedup-success' });
                 jacked.log("Saved!");
-            }
+            },
+            'json'
           );
 
     editableLayers.addLayer(layer);
@@ -87,10 +87,15 @@ function build_json(layer) {
     var map_bounds = map.getBounds();
     var zoom = map.getZoom();
     var geoJson = layer.toGeoJSON();
+    console.log('geo out')
+    console.log(geoJson.geometry);
     var geo = $.extend(true, {}, geoJson,
                        { properties: { search_value: search_value,
                                        map_bounds: map_bounds,
                                        zoom: zoom}});
+
+    // TODO: the coordinates array seems to be converted into an object
+    // in the form_vars of the request
     // purge functions
     return JSON.parse(JSON.stringify(geo));
 }

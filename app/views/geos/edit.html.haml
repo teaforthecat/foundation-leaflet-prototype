@@ -1,8 +1,9 @@
 - if params[:iframe]
-  = render 'map', path: geo_path(@geo)
-  #currentGeoObject{'data-geo' => @geo.geojson.to_json}
+  = render 'map', path: geo_path(@geo, format: 'json')
+  #currentGeoObject
   :javascript
     $('#currentGeoObject').data( 'geo', #{ @geo.geojson.to_json });
+  -# $('#currentGeoObject').data( 'geo', #{render partial: 'map', formats: 'json'});
   -# window.current_geo_object = #{render partial: 'map', formats: 'json'}
   -# warning: the format is set to json now :)
 - else
