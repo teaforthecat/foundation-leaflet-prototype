@@ -14,23 +14,21 @@ class NotificationsController < ApplicationController
   def new
     #temporary pointer to join objects because geo is saved from an an iframe
     @sse_channel = SecureRandom.hex(8)
-    Rails.cache.write(@sse_channel, "{}")
     @notification = Notification.new(sse_channel: @sse_channel)
     @geo = @notification.build_geo(sse_channel: @sse_channel)
   end
 
   def edit
-    @sse_channel = SecureRandom.hex(8)
-    Rails.cache.write(@sse_channel, "{}")
   end
 
   def create
     @notification = Notification.new(notification_params)
     @notification.account = current_user.account
-    @geo = @notification.build_geo geo_params.fetch("geo")
-    @geo.account = current_user.account
+    # link geo created in an iframe
+    @geo = Geo.where(sse_channel: @notification.sse_channel).first
+    @notification.geo = @geo
     respond_to do |format|
-      if @notification.save! && @geo.save!
+      if @notification.save!
         format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
         format.json { render action: 'show', status: :created, location: @notification }
       else
@@ -42,8 +40,8 @@ class NotificationsController < ApplicationController
 
   def update
     @notification = Notification.new(notification_params)
-    @geo = @notification.build_geo geo_params.fetch("geo")
-    @geo.account = current_user.account
+    # @geo = @notification.build_geo geo_params.fetch("geo")
+    # @geo.account = current_user.account
     respond_to do |format|
       if @notification.update!(notification_params) && @geo.save!
         format.html { redirect_to @notification, notice: 'Notification was successfully updated.' }
@@ -86,11 +84,6 @@ class NotificationsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def notification_params
       params.require("notification").
-        permit( :message, :dcm_topic_id)
-
-    end
-
-    def geo_params
-      params.require(:notification).permit({geo: :geojson})
+        permit( :message, :dcm_topic_id, :sse_channel)
     end
 end

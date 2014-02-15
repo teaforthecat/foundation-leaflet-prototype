@@ -4,8 +4,8 @@ var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 15});
 // var center = L.latLngBounds(southWest, northEast).getCenter();
 window.map = new L.Map('map', {layers: [cloudmade],
                                // TODO: use current location for default latLng
-                               center: new L.LatLng(-37.7772, 175.2756),
-                               zoom: 10 });
+                               center: new L.LatLng(51.4826, -0.0077),
+                               zoom: 15 });
 
 L.Icon.Default.imagePath = '/assets';
 

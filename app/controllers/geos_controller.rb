@@ -20,13 +20,8 @@ class GeosController < ApplicationController
   end
 
   def new
-    @sse_channel = params[:sse_channel]
-    respond_to do |f|
-      f.html {
-        @geo = Geo.new(account_id: current_user.account_id)
-      }
-      f.json { head :bad_request }
-    end
+    sse_channel = params[:sse_channel]
+    @geo = Geo.new(account_id: current_user.account_id, sse_channel: sse_channel)
   end
 
   def edit
@@ -34,6 +29,10 @@ class GeosController < ApplicationController
 
   def create
     @geo = Geo.new(geo_params)
+    # sse_channel used to link a notification to a geo created in an iframe
+    if params[:sse_channel].present?
+      @geo.sse_channel = params[:sse_channel].to_s
+    end
     @geo.account = current_user.account
     if @geo.save!
       redirect_to @geo, notice: 'Geo was successfully created.'

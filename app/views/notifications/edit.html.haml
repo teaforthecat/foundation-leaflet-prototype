@@ -4,3 +4,9 @@
     %h3 New Notification
 = render 'form'
 = link_to 'Back', notifications_path
+
+%a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
+  Edit Map
+= render 'geos/map_modal',
+  modal_id: 'ensMap',
+  src: edit_geo_path(@notification.geo, iframe: true)
