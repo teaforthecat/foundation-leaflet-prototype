@@ -1,13 +1,16 @@
 - if current_user
   %dl.sub-nav
+    -# TODO: use columns instead
     -# whitespace
     %dt
     %dd
     %dd
     -# whitespace
-    %dd= link_to "Create Notification", new_notification_path
-    %dd= link_to "Reports", notifications_path
-    %dd= link_to "e911", e911s_path
-    %dd= link_to "GeoMaps", geos_path
-
+    - [["Create Notification", new_notification_path],
+      ["Reports", notifications_path],
+      ["e911", e911s_path],
+      ["GeoMaps", geos_path],
+      ].each do |label,path|
+      %dd{class: ('active' if (path == request.path.sub(/\/\d+(\/edit)?/,'')) ) }
+        = link_to label, path
   %hr

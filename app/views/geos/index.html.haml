@@ -12,5 +12,3 @@
         %td= geo.name
         %td= link_to 'Edit', edit_geo_path(geo), class: 'button'
         %td= link_to 'Destroy', geo, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-= render 'map_modal', modal_id: 'ensMap', src: new_geo_path(iframe: true)

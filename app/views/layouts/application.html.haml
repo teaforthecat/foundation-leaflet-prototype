@@ -12,19 +12,35 @@
     = csrf_meta_tag
 
   %body
+    .off-canvas-wrap
+      .inner-wrap
+        %header
+          = render 'layouts/global_nav'
+          = render 'layouts/navigation'
 
-    %header
-      = render 'layouts/global_nav'
-      = render 'layouts/navigation'
+        -# TODO look into why the right-off-canvas-toggle breaks with turbolinks
+        %aside.right-off-canvas-menu
+          %ul.off-canvas-list
+            %li
+              %label Profile
+            %li
+              - if user_signed_in?
+                = link_to 'Logout', destroy_user_session_path, :method => :delete
+              - else
+                = link_to 'Login', new_user_session_path
 
-    %main.row{:role => "main"}
-      .row
-        .columns.large-12
-          = yield
-        .row
-    %footer
-      .row
-        .columns
+        -# TODO: not sure what this does:
+        %a.exit-off-canvas{href: '#'}
+
+        %section.main-section
+          %main.row{:role => "main"}
+            .row
+              .columns.large-12
+                = yield
+              .row
+          %footer
+            .row
+              .columns
 
 
     = javascript_include_tag "application", "data-turbolinks-track" => true

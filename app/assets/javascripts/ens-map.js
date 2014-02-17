@@ -9,7 +9,7 @@ window.map = new L.Map('map', {layers: [cloudmade],
 
 L.Icon.Default.imagePath = '/assets';
 
-// global
+
 if ( $('#currentGeoObject').data( 'geo' ) ) {
     geojsony = $('#currentGeoObject').data( 'geo' );
     var editableLayers = L.geoJson(geojsony).addTo(window.map);
@@ -61,10 +61,9 @@ map.addControl(drawControl);
 search_layer = new L.Control.GeoSearch({
     provider: new L.GeoSearch.Provider.OpenStreetMap(),
     position: 'bottomleft',
-    searchLabel: window.searchValue, // set to saved or default value above
+    // set to saved or default value above
+    searchLabel: window.searchValue,
     zoomLevel:  10
-
-    //    onRemove: function(){},
 }).addTo(map);
 
 
@@ -75,22 +74,28 @@ map.addLayer(search_layer);
 
 function drawnItemHandler (layer){
     var geo_path = $('#map').data('geo-path');
-    // var sse_channel = $('#map').data('sse-channel');
-    var really_json = build_json(layer)
+    var really_json = build_json(layer);
 
-
-    $.post( geo_path,
-            {geo: {geojson: really_json}},
-
-            // sse_channel: sse_channel},
-            function(response){
-                var jacked = humane.create({
-                    baseCls: 'humane-jackedup',
-                    addnCls: 'humane-jackedup-success' });
-                jacked.log("Saved!");
-            },
-            'json'
-          );
+    $.ajax({
+        type: 'POST',
+        url: geo_path,
+        data: {geo: {geojson: really_json}},
+        success: function(response){
+            var jacked = humane.create({
+                baseCls: 'humane-jackedup',
+                addnCls: 'humane-jackedup-success' });
+            jacked.log("Saved!");
+        },
+        error: function(response) {
+            var jacked = humane.create({
+                clickToClose: true,
+                timeout: 0, //allows clickToClose
+                baseCls: 'humane-jackedup',
+                addnCls: 'humane-jackedup-error' });
+            jacked.log(response.error_message);
+        },
+        datatype: 'json'
+    });
 
     editableLayers.addLayer(layer);
 };

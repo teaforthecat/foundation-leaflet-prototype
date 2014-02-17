@@ -18,9 +18,11 @@
 //= require eventsource
 //= require notification
 
-$(function() {
-  $(document).foundation();
-});
+// this works with turbolinks
+window.onload = function() {
+        $(document).foundation();
+};
+
 
 $('.ckeditor').ckeditor({
   // optional config

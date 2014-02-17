@@ -9,6 +9,4 @@
 
 - else
   = render 'form'
-  %a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
-    Edit Map
-  = render 'map_modal', modal_id: 'ensMap', src: edit_geo_path(geo, iframe: true)
+  = render 'map_modal', link_text: 'Edit Map', src: edit_geo_path(@geo, iframe: true)

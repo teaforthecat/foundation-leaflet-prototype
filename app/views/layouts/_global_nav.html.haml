@@ -3,12 +3,16 @@
     %li.name
       %h1= link_to 'Govdelivery', "/"
 
-  %section.top-bar-section
+
+  %section.right-small
+    %a.right-off-canvas-toggle.menu-icon
+      %span
+
+  %section.top-bar-section.middle
     %ul.right
       - if user_signed_in?
         %li
           = link_to "Welcome #{ current_user.email }", edit_user_registration_path(current_user)
-
         %li.divider
       %li
         = link_to "Support","#"

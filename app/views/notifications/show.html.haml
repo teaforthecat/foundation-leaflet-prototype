@@ -1,12 +1,20 @@
 %p#notice= notice
 
+%div.date.created_at
+  %p= @notification.created_at.to_formatted_s(:long)
+
+%div.message
+  %p!= @notification.message
+
 %p
   %b Dcm topic:
   = @notification.dcm_topic_id
-%p
-  %b Dcm account code:
-  = @notification.dcm_account_code
 
-= link_to 'Edit', edit_notification_path(@notification)
-\|
+%p
+  %b e911 lists:
+  %ul.e911_list
+    - @notification.e911s.each do |e911|
+      %li.e911= e911.name
+
+
 = link_to 'Back', notifications_path

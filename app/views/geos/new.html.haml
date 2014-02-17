@@ -2,5 +2,4 @@
   = render 'map', path: geos_path(sse_channel: @geo.sse_channel) #POST to :create
 - else
   = render 'form'
-  %a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
-  = render 'map_modal', modal_id: 'ensMap', src: new_geo_path(iframe: true)
+  = render 'map_modal', link_text: 'Add Map', src: new_geo_path(iframe: true)

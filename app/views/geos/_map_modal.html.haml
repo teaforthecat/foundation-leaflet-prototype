@@ -1,5 +1,8 @@
 -# requires local vars: modal_id, src
-.reveal-modal.xlarge{id: modal_id, data: {reveal: true}, style: 'height: 100%;'}
+%a.button{href: '#', data: {'reveal-id' => 'ensMap', reveal: true}}
+  = link_text
+.reveal-modal.xlarge{id: 'ensMap',
+  data: {reveal: true}, style: 'height: 100%;'}
   .close-reveal-modal!= '&#215;'
   %iframe#leaflet-map{src: src,
     width: '100%',
