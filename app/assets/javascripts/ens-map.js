@@ -1,18 +1,21 @@
-var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png'
+var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/7e76ad3c5e4c483594e4c02ede014c91/997/256/{z}/{x}/{y}.png'
 var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 15});
 
 // var center = L.latLngBounds(southWest, northEast).getCenter();
-window.map = new L.Map('map', {layers: [cloudmade],
+map = new L.Map('map', {layers: [cloudmade]});
                                // TODO: use current location for default latLng
-                               center: new L.LatLng(51.4826, -0.0077),
-                               zoom: 15 });
+                               // center: new L.LatLng(51.4826, -0.0077),
+                               // // NOTE: it is important that this is set to a value that is less than
+                               // // the zoom implied by fitBounds below
+                               // working around the issue by using setView below
+                               // zoom: 8 });
 
 L.Icon.Default.imagePath = '/assets';
 
 
 if ( $('#currentGeoObject').data( 'geo' ) ) {
     geojsony = $('#currentGeoObject').data( 'geo' );
-    var editableLayers = L.geoJson(geojsony).addTo(window.map);
+    var editableLayers = L.geoJson(geojsony).addTo(map);
     window.searchValue = geojsony.properties.search_value || "City: ";
     var mapBounds = geojsony.properties.map_bounds;
     var sw_lat = parseFloat(mapBounds._southWest.lat);
@@ -20,15 +23,15 @@ if ( $('#currentGeoObject').data( 'geo' ) ) {
     var ne_lat = parseFloat(mapBounds._northEast.lat);
     var ne_lng = parseFloat(mapBounds._northEast.lng);
 
-    window.map.fitBounds([
+    map.fitBounds([
         [sw_lat, sw_lng],
         [ne_lat, ne_lng]
     ]);
 } else {
     var editableLayers = new L.FeatureGroup();
     window.searchValue = "City: ";
+    map.setView( [51.4826, -0.0077], 15);
 }
-
 
 options = function(editableLayers) {
     return {
@@ -97,7 +100,7 @@ function drawnItemHandler (layer){
         datatype: 'json'
     });
 
-    editableLayers.addLayer(layer);
+    map.addLayer(layer);
 };
 
 
